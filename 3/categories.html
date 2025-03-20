@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - AnimeStream</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="index.html">AnimeStream</a>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="categories.html" class="active">Categories</a>
+            <a href="search.html">Search</a>
+            <a href="about.html">About</a>
+        </div>
+        <div class="nav-search">
+            <input type="text" id="global-search" placeholder="Search anime...">
+            <button id="global-search-btn"><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Categories Section -->
+        <section class="section">
+            <h2>Browse By Genre</h2>
+            <div class="category-grid">
+                <a href="search.html?genre=Action" class="category-card">
+                    <i class="fas fa-fire"></i>
+                    <h3>Action</h3>
+                    <p>Exciting battles and high-energy scenes</p>
+                </a>
+                <a href="search.html?genre=Adventure" class="category-card">
+                    <i class="fas fa-mountain"></i>
+                    <h3>Adventure</h3>
+                    <p>Epic journeys and exploration</p>
+                </a>
+                <a href="search.html?genre=Fantasy" class="category-card">
+                    <i class="fas fa-dragon"></i>
+                    <h3>Fantasy</h3>
+                    <p>Magical worlds and supernatural elements</p>
+                </a>
+                <a href="search.html?genre=Drama" class="category-card">
+                    <i class="fas fa-theater-masks"></i>
+                    <h3>Drama</h3>
+                    <p>Emotional and character-driven stories</p>
+                </a>
+                <a href="search.html?genre=Comedy" class="category-card">
+                    <i class="fas fa-laugh"></i>
+                    <h3>Comedy</h3>
+                    <p>Humorous and light-hearted series</p>
+                </a>
+                <a href="search.html?genre=Romance" class="category-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Romance</h3>
+                    <p>Love stories and relationships</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Category Results Section (if genre is selected) -->
+        <section class="section" id="category-results-section" style="display: none;">
+            <h2 id="category-title">Category Results</h2>
+            <div class="anime-grid" id="category-results">
+                <!-- Results will be populated by JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About AnimeStream</h3>
+                <p>Your favorite destination for anime content.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                    <li><a href="search.html">Search</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AnimeStream. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup global search
+            setupSearch();
+            
+            // Check if there's a genre parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const genre = urlParams.get('genre');
+            
+            if (genre) {
+                // Show results section
+                const resultsSection = document.getElementById('category-results-section');
+                const categoryTitle = document.getElementById('category-title');
+                const resultsContainer = document.getElementById('category-results');
+                
+                // Set title
+                categoryTitle.textContent = `${genre} Anime`;
+                
+                // Filter anime by genre
+                const results = animeData.filter(anime => 
+                    anime.genre.includes(genre)
+                );
+                
+                // Display results
+                if (results.length > 0) {
+                    resultsContainer.innerHTML = results.map(anime => 
+                        createAnimeCard(anime)
+                    ).join('');
+                } else {
+                    resultsContainer.innerHTML = '<p class="no-results">No anime found in this category</p>';
+                }
+                
+                // Show results section
+                resultsSection.style.display = 'block';
+                
+                // Scroll to results
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+</html> 
