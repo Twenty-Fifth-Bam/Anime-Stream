@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Title - AnimeStream</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="index.html">AnimeStream</a>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="categories.html">Categories</a>
+            <a href="search.html">Search</a>
+            <a href="about.html">About</a>
+        </div>
+        <div class="nav-search">
+            <input type="text" id="global-search" placeholder="Search anime...">
+            <button id="global-search-btn"><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="anime-content">
+        <!-- Content will be populated by JavaScript -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About AnimeStream</h3>
+                <p>Your favorite destination for anime content.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                    <li><a href="search.html">Search</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AnimeStream. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Get anime ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const animeId = parseInt(urlParams.get('id'));
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup global search
+            setupSearch();
+            
+            // Find the anime by ID
+            const anime = animeData.find(a => a.id === animeId);
+            
+            if (anime) {
+                // Set page title
+                document.title = `${anime.title} - AnimeStream`;
+                
+                // Create the anime details HTML
+                const mainContent = document.getElementById('anime-content');
+                
+                let relatedHTML = '';
+                // Filter related anime (same genre but different ID)
+                const related = animeData.filter(a => 
+                    a.id !== anime.id && 
+                    a.genre.split(', ').some(g => anime.genre.includes(g))
+                ).slice(0, 4); // Get up to 4 related anime
+                
+                if (related.length > 0) {
+                    relatedHTML = `
+                        <section class="section" id="related-section">
+                            <h2>You May Also Like</h2>
+                            <div class="anime-grid" id="relatedAnime">
+                                ${related.map(a => createAnimeCard(a)).join('')}
+                            </div>
+                        </section>
+                    `;
+                }
+                
+                // Build the content HTML
+                mainContent.innerHTML = `
+                    <!-- Anime Details -->
+                    <section class="section anime-details-section">
+                        <div class="anime-details">
+                            <div class="anime-details-header">
+                                <div class="anime-cover">
+                                    <img src="${anime.cover}" alt="${anime.title}">
+                                </div>
+                                <div class="anime-info">
+                                    <h1>${anime.title}</h1>
+                                    <div class="anime-meta">
+                                        <span>${anime.genre}</span>
+                                        <span>${anime.year}</span>
+                                        <span>${anime.status}</span>
+                                    </div>
+                                    <p>${anime.synopsis}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Episode List -->
+                    <section class="section episodes-section">
+                        <h2>Episodes</h2>
+                        <div class="episode-list">
+                            ${createEpisodeList(anime.episodes)}
+                        </div>
+                    </section>
+                    
+                    ${relatedHTML}
+                `;
+            } else {
+                // Anime not found
+                document.body.innerHTML = `
+                    <nav class="navbar">
+                        <div class="nav-brand">
+                            <a href="index.html">AnimeStream</a>
+                        </div>
+                        <div class="nav-links">
+                            <a href="index.html">Home</a>
+                            <a href="categories.html">Categories</a>
+                            <a href="search.html">Search</a>
+                            <a href="about.html">About</a>
+                        </div>
+                        <div class="nav-search">
+                            <input type="text" id="global-search" placeholder="Search anime...">
+                            <button id="global-search-btn"><i class="fas fa-search"></i></button>
+                        </div>
+                    </nav>
+                    <div class="error-container">
+                        <h2>Anime Not Found</h2>
+                        <p>Sorry, the anime you're looking for does not exist or has been removed.</p>
+                        <a href="index.html" class="btn">Back to Home</a>
+                    </div>
+                    <footer class="footer">
+                        <div class="footer-content">
+                            <div class="footer-section">
+                                <h3>About AnimeStream</h3>
+                                <p>Your favorite destination for anime content.</p>
+                            </div>
+                            <div class="footer-section">
+                                <h3>Quick Links</h3>
+                                <ul>
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="categories.html">Categories</a></li>
+                                    <li><a href="search.html">Search</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="footer-bottom">
+                            <p>&copy; 2024 AnimeStream. All rights reserved.</p>
+                        </div>
+                    </footer>
+                `;
+                
+                // Setup search on the error page
+                setupSearch();
+            }
+        });
+    </script>
+</body>
+</html> 
