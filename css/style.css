@@ -8,27 +8,14 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    background: #0f0c29;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background-attachment: fixed;
-    color: #f8f9fa;
+    background-color: #ffffff;
+    color: #333;
     position: relative;
 }
 
+/* Remove the background image overlay */
 body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('https://images5.alphacoders.com/131/1318859.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.15;
-    z-index: -1;
+    display: none;
 }
 
 /* Container for all content */
@@ -40,29 +27,26 @@ body::before {
 
 /* Navigation Bar */
 .navbar {
-    background-color: rgba(19, 17, 46, 0.9);
-    padding: 1rem 2rem;
+    background-color: #000000;
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .nav-brand a {
-    color: #fff;
+    color: #ffffff;
     text-decoration: none;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: bold;
-    text-shadow: 0 0 10px rgba(82, 113, 255, 0.5);
 }
 
 .nav-links a {
-    color: #fff;
+    color: #ffffff;
     text-decoration: none;
     margin: 0 1rem;
     padding: 0.5rem;
@@ -78,7 +62,7 @@ body::before {
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #6c63ff;
+    background-color: #fff;
     transition: width 0.3s ease;
 }
 
@@ -89,7 +73,7 @@ body::before {
 
 .nav-links a:hover,
 .nav-links a.active {
-    color: #6c63ff;
+    color: #cccccc;
 }
 
 .nav-search {
@@ -99,22 +83,20 @@ body::before {
 
 .nav-search input {
     padding: 0.7rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #ddd;
     border-radius: 4px;
     width: 200px;
     font-size: 0.9rem;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    background: #fff;
+    color: #333;
 }
 
 .nav-search input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    color: #999;
 }
 
 .nav-search button {
-    background: #6c63ff;
+    background: #000;
     border: none;
     padding: 0.7rem 1rem;
     border-radius: 4px;
@@ -124,116 +106,66 @@ body::before {
 }
 
 .nav-search button:hover {
-    background: #5a52d5;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(108, 99, 255, 0.3);
+    background: #333;
 }
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(to right, rgba(23, 21, 55, 0.8), rgba(45, 42, 101, 0.8)),
-                url('https://images2.alphacoders.com/110/1102383.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('https://images5.alphacoders.com/131/1318859.png');
     background-size: cover;
     background-position: center;
-    height: 500px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: white;
+    color: #ffffff;
     padding: 2rem;
-    margin-bottom: 3rem;
-    position: relative;
-    overflow: hidden;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.hero::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    background: linear-gradient(to top, rgba(15, 12, 41, 1), rgba(15, 12, 41, 0));
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
 }
 
 .hero h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
     font-weight: 700;
-    letter-spacing: 2px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    animation: fadeInDown 1s;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero p {
     font-size: 1.2rem;
     max-width: 700px;
     margin: 0 auto;
-    animation: fadeInUp 1s;
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Main Content */
 .section {
     padding: 2rem;
     margin-bottom: 2rem;
-    background: rgba(25, 22, 57, 0.7);
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
 }
 
 .section h2 {
     margin-bottom: 1.5rem;
-    color: #fff;
-    font-size: 1.8rem;
+    color: #333;
+    font-size: 1.5rem;
     font-weight: 600;
-    position: relative;
-    display: inline-block;
+    border-bottom: 2px solid #f1f1f1;
     padding-bottom: 10px;
 }
 
-.section h2::after {
-    content: '';
-    position: absolute;
-    width: 50px;
-    height: 3px;
-    background: #6c63ff;
-    bottom: 0;
-    left: 0;
-}
-
-.video-grid {
+.video-grid, .anime-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
 }
 
 /* Video Card */
@@ -370,39 +302,24 @@ body::before {
 
 /* Footer */
 .footer {
-    background: rgba(19, 17, 46, 0.95);
-    color: white;
-    padding: 3rem 2rem 1rem;
-    margin-top: 3rem;
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
-    position: relative;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 2rem 0;
+    margin-top: 2rem;
 }
 
 .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: 0 1rem;
 }
 
 .footer-section h3 {
-    margin-bottom: 1.2rem;
-    font-size: 1.3rem;
-    color: #fff;
-    position: relative;
-    display: inline-block;
-    padding-bottom: 10px;
-}
-
-.footer-section h3::after {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 2px;
-    background: #6c63ff;
-    bottom: 0;
-    left: 0;
+    color: #ffffff;
+    margin-bottom: 1rem;
 }
 
 .footer-section ul {
@@ -410,17 +327,17 @@ body::before {
 }
 
 .footer-section ul li {
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
 }
 
 .footer-section a {
-    color: rgba(255, 255, 255, 0.8);
+    color: #ffffff;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.3s;
 }
 
 .footer-section a:hover {
-    color: #6c63ff;
+    color: #cccccc;
 }
 
 .social-links {
@@ -429,23 +346,16 @@ body::before {
 }
 
 .social-links a {
+    color: #ffffff;
+    margin-right: 1rem;
     font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.3s ease;
-}
-
-.social-links a:hover {
-    color: #6c63ff;
-    transform: translateY(-3px);
 }
 
 .footer-bottom {
     text-align: center;
-    margin-top: 2.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9rem;
+    margin-top: 1.5rem;
+    border-top: 1px solid #333;
 }
 
 /* Video Modal */
@@ -546,16 +456,16 @@ body::before {
 }
 
 .search-filters {
-    background: rgba(30, 27, 75, 0.8);
-    padding: 1.8rem;
-    border-radius: 10px;
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
     margin-bottom: 2rem;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
     align-items: flex-end;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid #eee;
 }
 
 .filter-group {
@@ -567,74 +477,67 @@ body::before {
     display: block;
     margin-bottom: 0.8rem;
     font-weight: 500;
-    color: #fff;
+    color: #333;
 }
 
 .filter-group input,
 .filter-group select {
     width: 100%;
     padding: 0.8rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     font-size: 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    transition: all 0.3s;
+    background: #fff;
+    color: #333;
 }
 
 .filter-group input:focus,
 .filter-group select:focus {
     outline: none;
-    border-color: #6c63ff;
-    box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.3);
-}
-
-.filter-group select option {
-    background: #24213b;
-    color: white;
+    border-color: #000;
 }
 
 .search-btn {
-    padding: 0.9rem 1.8rem;
-    background: #6c63ff;
+    padding: 0.8rem 1.5rem;
+    background: #000;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    font-size: 0.9rem;
     font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
     min-width: 150px;
 }
 
 .search-btn:hover {
-    background: #5a52d5;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+    background: #333;
 }
 
 .search-results {
     margin-top: 2rem;
-    background: rgba(30, 27, 75, 0.7);
+    background: #fff;
     padding: 1.5rem;
-    border-radius: 10px;
+    border-radius: 8px;
     min-height: 200px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
 }
 
 .search-results h3 {
     margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-    color: #fff;
+    font-size: 1.3rem;
+    color: #333;
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 10px;
 }
 
-.search-results p {
-    color: rgba(255, 255, 255, 0.7);
+.no-results, .no-episodes {
     text-align: center;
-    padding: 2rem 0;
+    padding: 2rem;
+    color: #777;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #eee;
 }
 
 /* About Page */
@@ -642,41 +545,30 @@ body::before {
     display: grid;
     grid-template-columns: 3fr 2fr;
     gap: 2rem;
-    background: rgba(30, 27, 75, 0.8);
-    border-radius: 10px;
+    background: #fff;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     margin-bottom: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid #eee;
 }
 
 .about-text {
-    padding: 2.5rem;
+    padding: 2rem;
 }
 
 .about-text h3 {
-    margin: 1.8rem 0 0.8rem;
-    color: #fff;
-    font-size: 1.4rem;
-    position: relative;
-    display: inline-block;
+    margin: 1.5rem 0 0.8rem;
+    color: #333;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #f1f1f1;
     padding-bottom: 8px;
 }
 
-.about-text h3::after {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 2px;
-    background: #6c63ff;
-    bottom: 0;
-    left: 0;
-}
-
 .about-text p {
-    margin-bottom: 1.2rem;
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    color: #555;
 }
 
 .about-text ul {
@@ -686,7 +578,7 @@ body::before {
 
 .about-text ul li {
     margin-bottom: 0.7rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: #555;
 }
 
 .about-image {
@@ -714,39 +606,23 @@ body::before {
 }
 
 .faq-item {
-    background: rgba(30, 27, 75, 0.8);
-    padding: 1.8rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.faq-item:hover {
-    transform: translateY(-5px);
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
 }
 
 .faq-item h3 {
     margin-bottom: 1rem;
-    color: #fff;
+    color: #333;
     font-size: 1.2rem;
-    position: relative;
-    display: inline-block;
+    border-bottom: 2px solid #f1f1f1;
     padding-bottom: 8px;
 }
 
-.faq-item h3::after {
-    content: '';
-    position: absolute;
-    width: 25px;
-    height: 2px;
-    background: #6c63ff;
-    bottom: 0;
-    left: 0;
-}
-
 .faq-item p {
-    color: rgba(255, 255, 255, 0.8);
+    color: #555;
     line-height: 1.7;
 }
 
@@ -759,88 +635,71 @@ body::before {
 }
 
 .category-card {
-    background: rgba(30, 27, 75, 0.8);
-    border-radius: 10px;
-    padding: 2.5rem 2rem;
+    background: #fff;
+    border-radius: 8px;
+    padding: 2rem;
     text-align: center;
     text-decoration: none;
-    color: #fff;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    color: #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    position: relative;
-    overflow: hidden;
-}
-
-.category-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, rgba(108, 99, 255, 0.1), rgba(108, 99, 255, 0));
-    z-index: -1;
+    border: 1px solid #eee;
 }
 
 .category-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .category-card i {
-    font-size: 3rem;
-    color: #6c63ff;
-    margin-bottom: 1.5rem;
-    transition: all 0.3s ease;
-}
-
-.category-card:hover i {
-    transform: scale(1.2);
-    color: #8a83ff;
+    font-size: 2.5rem;
+    color: #000;
+    margin-bottom: 1rem;
 }
 
 .category-card h3 {
     margin-bottom: 0.8rem;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    color: #333;
 }
 
 .category-card p {
-    color: rgba(255, 255, 255, 0.7);
+    color: #666;
     font-size: 0.9rem;
-}
-
-/* Anime Grid */
-.anime-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
 }
 
 /* Anime Card */
 .anime-card {
-    background: rgba(30, 27, 75, 0.8);
-    border-radius: 8px;
+    background: #fff;
+    border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid #eee;
     height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     text-decoration: none;
+    margin-bottom: 15px;
 }
 
 .anime-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
 .anime-poster {
     position: relative;
-    padding-top: 140%; /* Poster aspect ratio */
+    width: 250px;
+    min-width: 250px;
     overflow: hidden;
+}
+
+.anime-poster::before {
+    content: '';
+    display: block;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
 }
 
 .anime-poster img {
@@ -857,56 +716,116 @@ body::before {
     transform: scale(1.05);
 }
 
-.overlay-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.overlay-content i {
-    font-size: 3rem;
-    color: white;
-    background: rgba(108, 99, 255, 0.7);
-    width: 70px;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    box-shadow: 0 0 20px rgba(108, 99, 255, 0.5);
-}
-
-.overlay-content span {
-    color: white;
-    font-size: 1rem;
-    font-weight: 500;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
 .anime-info {
-    padding: 1rem;
+    padding: 15px 20px;
     display: flex;
     flex-direction: column;
     flex: 1;
 }
 
 .anime-info h3 {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #333;
     line-height: 1.3;
+    font-weight: 600;
+}
+
+.anime-info .release-date {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.anime-info .release-date::before {
+    content: '\f073';
+    font-family: 'Font Awesome 5 Free';
+    margin-right: 6px;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.anime-info .uploader {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.anime-info .uploader i {
+    margin-right: 6px;
+    font-size: 0.8rem;
+}
+
+.anime-info .anime-excerpt {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 10px;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-.anime-info p {
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-top: auto;
+/* Anime Details Header - updating for details page */
+.anime-details-header {
+    display: grid;
+    grid-template-columns: minmax(300px, 400px) 1fr;
+    gap: 2rem;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.anime-details-section .anime-cover {
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.anime-details-section .anime-cover::before {
+    content: '';
+    display: block;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.anime-details-section .anime-cover img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.anime-details-section h1 {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    color: #333;
+    line-height: 1.2;
+    font-weight: 600;
+}
+
+.anime-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+
+.anime-meta span {
+    background: #f0f0f0;
+    color: #333;
+    padding: 0.3rem 0.8rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
 }
 
 /* Anime Detail Modal */
@@ -961,7 +880,7 @@ body::before {
 .anime-info h2 {
     font-size: 1.8rem;
     margin-bottom: 0.8rem;
-    color: white;
+    color: #333;
 }
 
 .anime-meta {
@@ -972,38 +891,37 @@ body::before {
 }
 
 .anime-meta span {
-    background: rgba(108, 99, 255, 0.3);
-    color: white;
+    background: #f0f0f0;
+    color: #333;
     padding: 0.3rem 0.8rem;
     border-radius: 4px;
     font-size: 0.875rem;
 }
 
 .anime-info p {
-    color: rgba(255, 255, 255, 0.9);
+    color: #333;
     line-height: 1.7;
     margin-bottom: 1rem;
 }
 
 /* Episode List */
 .episode-list-container {
-    background: rgba(19, 17, 46, 0.95);
-    padding: 2rem;
-    border-radius: 0 0 10px 10px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-top: none;
-    overflow-y: auto;
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #eee;
     max-height: 400px;
+    overflow-y: auto;
 }
 
 .episode-list-container h3 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     margin-bottom: 1rem;
-    color: white;
+    color: #333;
     position: sticky;
     top: 0;
-    background: rgba(19, 17, 46, 0.95);
-    padding: 1rem 0;
+    background: #f9f9f9;
+    padding: 0.5rem 0;
     z-index: 10;
 }
 
@@ -1019,14 +937,14 @@ body::before {
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background: rgba(30, 27, 75, 0.6);
+    background: #fff;
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: transform 0.3s ease, background 0.3s ease;
+    border: 1px solid #eee;
+    transition: transform 0.3s ease;
 }
 
 .episode-item:hover {
-    background: rgba(30, 27, 75, 0.8);
+    background: #f5f5f5;
     transform: translateY(-3px);
 }
 
@@ -1038,11 +956,11 @@ body::before {
 
 .episode-number {
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
+    color: #333;
 }
 
 .episode-title {
-    color: rgba(255, 255, 255, 0.7);
+    color: #666;
 }
 
 .episode-downloads {
@@ -1052,7 +970,7 @@ body::before {
 }
 
 .download-btn {
-    background: #6c63ff;
+    background: #000;
     color: white;
     padding: 0.5rem 0.8rem;
     border-radius: 4px;
@@ -1065,7 +983,7 @@ body::before {
 }
 
 .download-btn:hover {
-    background: #5a52d5;
+    background: #333;
     transform: translateY(-2px);
 }
 
@@ -1078,28 +996,9 @@ body::before {
     margin-top: 1rem;
 }
 
-.no-results {
-    text-align: center;
-    padding: 2rem;
-    color: rgba(255, 255, 255, 0.7);
-}
-
 /* Anime Details Page */
 .anime-details-section {
     margin-top: 2rem;
-}
-
-.anime-details-header {
-    display: grid;
-    grid-template-columns: minmax(150px, 250px) 1fr;
-    gap: 2rem;
-}
-
-.anime-details-section h1 {
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
-    color: #fff;
-    line-height: 1.3;
 }
 
 .error-container {
@@ -1130,18 +1029,6 @@ body::before {
     margin-bottom: 1.5rem;
 }
 
-/* No Episodes Message */
-.no-episodes {
-    text-align: center;
-    padding: 2rem;
-    color: rgba(255, 255, 255, 0.7);
-    background: rgba(30, 27, 75, 0.6);
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    margin: 1rem 0;
-    font-size: 1.1rem;
-}
-
 /* Media Queries */
 @media (max-width: 768px) {
     .navbar {
@@ -1170,11 +1057,11 @@ body::before {
     }
 
     .hero h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
 
     .hero {
-        height: 400px;
+        height: 250px;
     }
 
     .section {
@@ -1242,7 +1129,55 @@ body::before {
     }
     
     .anime-details-section .anime-cover {
-        max-width: 200px;
-        margin: 0 auto 2rem;
+        max-width: none;
+        margin: 0 0 1.5rem;
     }
+
+    .anime-card {
+        flex-direction: column;
+    }
+    
+    .anime-poster {
+        width: 100%;
+        min-width: 100%;
+    }
+    
+    .anime-info {
+        padding: 15px;
+    }
+
+    .anime-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+    .anime-grid {
+        grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    }
+    
+    .anime-poster {
+        width: 200px;
+        min-width: 200px;
+    }
+}
+
+/* Update the anime grid layout for proper spacing */
+.anime-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+    gap: 20px;
+}
+
+.uploader-info {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.uploader-info p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
 } 

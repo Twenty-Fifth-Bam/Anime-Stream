@@ -15,6 +15,8 @@ const animeData = [
                 downloadLink: 'https://cuty.io/umD01TAWa'
             },
         ],
+        uploaderName: 'AnimeAdmin',
+        uploadDate: 'March 15, 2024',
         featured: true,
         popular: true,
         topPick: true
@@ -28,15 +30,12 @@ function createAnimeCard(anime) {
         <a href="anime.html?id=${anime.id}" class="anime-card">
             <div class="anime-poster">
                 <img src="${anime.cover}" alt="${anime.title}">
-                <div class="overlay">
-                    <div class="overlay-content">
-                        <i class="fas fa-play-circle"></i>
-                        <span>View Details</span>
-                    </div>
-                </div>
             </div>
             <div class="anime-info">
                 <h3>${anime.title}</h3>
+                <div class="release-date">${anime.year}</div>
+                <p class="anime-excerpt">${anime.synopsis.substring(0, 120)}${anime.synopsis.length > 120 ? '...' : ''}</p>
+                <div class="uploader"><i class="fas fa-user"></i> ${anime.uploaderName || 'Admin'}</div>
             </div>
         </a>
     `;
