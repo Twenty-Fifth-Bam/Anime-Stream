@@ -11,6 +11,17 @@ body {
     background-color: #ffffff;
     color: #333;
     position: relative;
+    opacity: 1;
+    animation: quickFadeIn 0.1s ease-out;
+}
+
+@keyframes quickFadeIn {
+    from {
+        opacity: 0.8;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 /* Remove the background image overlay */
@@ -136,7 +147,7 @@ body::before {
     text-align: center;
     color: #ffffff;
     padding: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     border-bottom: 1px solid #eee;
 }
 
@@ -154,6 +165,27 @@ body::before {
     margin: 0 auto;
     color: #ffffff;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Note Container */
+.note-container {
+    background-color: #f8f8f8;
+    padding: 15px 20px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 2rem;
+}
+
+.note {
+    color: #333;
+    font-size: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.note strong {
+    color: #000;
 }
 
 /* Main Content */
@@ -369,6 +401,18 @@ body::before {
     padding-top: 1.5rem;
     margin-top: 1.5rem;
     border-top: 1px solid #333;
+}
+
+.uploader-info {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.anime-details .uploader-info {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #888;
 }
 
 /* Video Modal */
@@ -668,89 +712,95 @@ body::before {
     font-size: 0.9rem;
 }
 
-/* Anime Card */
+/* Anime Card List Style */
 .anime-card {
     display: flex;
     flex-direction: row;
-    align-items: center;
     gap: 20px;
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    padding: 15px;
+    border: 1px solid #eee;
+}
+
+.anime-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .anime-poster {
-    flex: 0 0 420px !important;
-    height: auto !important;
+    flex: 0 0 300px !important;
+    height: 200px !important;
     overflow: hidden !important;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    border-radius: 8px;
 }
 
 .anime-poster img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
-}
-
-.anime-card:hover .anime-poster {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-
-.anime-card:hover .anime-poster img {
-    transform: scale(1.08);
 }
 
 .anime-info {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    text-align: left;
+    justify-content: space-between;
+    padding: 10px 0;
 }
 
-.anime-info h3, 
-.anime-info h3 a {
-    color: black !important;
-    text-decoration: none !important;
+.anime-info h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #333;
 }
 
-.anime-info .release-date {
-    font-size: 1rem;
+.anime-excerpt {
     color: #666;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-}
-
-.anime-info .release-date::before {
-    content: '\f073';
-    font-family: 'Font Awesome 5 Free';
-    margin-right: 6px;
-    font-size: 0.8rem;
-    color: #888;
-}
-
-.anime-info .uploader {
-    font-size: 1rem;
-    color: #888;
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-}
-
-.anime-info .uploader i {
-    margin-right: 6px;
-    font-size: 0.8rem;
-}
-
-.anime-info .anime-excerpt {
     font-size: 1rem;
     line-height: 1.6;
-    color: #555;
-    margin-bottom: 12px;
-    display: block;
+    margin-bottom: 15px;
+}
+
+.card-footer {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+/* Mobile responsiveness for list view */
+@media (max-width: 768px) {
+    .anime-card {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .anime-poster {
+        flex: 0 0 200px !important;
+        width: 100%;
+        max-width: none;
+    }
+
+    .anime-info {
+        padding: 15px 0 0;
+    }
+
+    .anime-info h3 {
+        font-size: 1.2rem;
+    }
+
+    .card-footer {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
 }
 
 /* Anime Details Page */
@@ -1070,6 +1120,9 @@ body::before {
     .anime-poster {
         width: 100%;
         min-width: 100%;
+        max-width: 300px;
+        flex: 0 0 auto !important;
+        margin: 0 auto;
     }
     
     .anime-info {
@@ -1079,6 +1132,17 @@ body::before {
     .anime-grid {
         grid-template-columns: 1fr;
         gap: 15px;
+    }
+
+    /* Fix for anime details header on mobile */
+    .anime-header img {
+        width: 150px;
+        max-width: 50%;
+        margin: 0 auto;
+    }
+
+    .form-row {
+        flex-direction: column;
     }
 }
 
@@ -1093,11 +1157,13 @@ body::before {
     }
 }
 
-/* Update the anime grid layout for proper spacing */
+/* Update the anime grid layout to list format */
 .anime-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .uploader-info {
@@ -1153,4 +1219,250 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
     color: #ff6347 !important; /* Highlight color */
     transform: scale(1.05); /* Slightly enlarge the text */
     text-shadow: 0 0 8px rgba(255, 99, 71, 0.5); /* Glow effect */
+}
+
+/* Comment Section */
+.comment-section {
+    margin-top: 2rem;
+    background: #f8f8f8;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+}
+
+.comment-form {
+    margin-bottom: 2rem;
+}
+
+.comment-form textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
+.form-row input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-row button {
+    padding: 10px 20px;
+    background: #000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.form-row button:hover {
+    background: #333;
+}
+
+.comments-container {
+    margin-top: 20px;
+}
+
+.no-comments {
+    text-align: center;
+    color: #888;
+    padding: 20px;
+    font-style: italic;
+}
+
+.comment {
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comment-date {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.comment-body p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Card Footer */
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.pin-btn {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.pin-btn:hover {
+    background-color: #f0f0f0;
+    border-color: #ccc;
+}
+
+.pin-btn.pinned {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+    color: #2196f3;
+}
+
+.pin-btn i {
+    margin-right: 4px;
+}
+
+.uploader {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.uploader i {
+    margin-right: 4px;
+}
+
+.no-favorites {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f8f8;
+    border-radius: 8px;
+    margin: 1rem 0;
+    color: #666;
+    border: 2px dashed #ddd;
+}
+
+.no-favorites p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+/* Update anime card hover effect */
+.anime-card:hover .pin-btn {
+    opacity: 1;
+}
+
+.pin-btn {
+    opacity: 0.8;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+/* Ensure pin button doesn't interfere with card click */
+.pin-btn:focus {
+    outline: none;
+}
+
+.meta-info {
+    display: flex;
+    gap: 20px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.meta-info span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.meta-info i {
+    color: #888;
+}
+
+.release-date {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.status {
+    background: #f0f0f0;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.view-btn {
+    background: #000;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+    background: #333;
+    transform: translateY(-2px);
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+@media (max-width: 768px) {
+    .meta-info {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .actions {
+        width: 100%;
+    }
+    
+    .view-btn, .pin-btn {
+        flex: 1;
+        justify-content: center;
+    }
 } 

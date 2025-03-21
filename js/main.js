@@ -43,25 +43,140 @@ const animeData = [
         popular: true,
         topPick: true,
         nextVideo: 1 // Added next video link back to the first anime
+    },
+    {
+        id: 3,
+        title: 'Solo Leveling Season 2 Hindi Dubbed Episode Download HD',
+        cover: 'images/solo-l.jpg',
+        genre: 'Action, Adventure, Fantasy',
+        year: '2025',
+        status: 'Total 13 Episodes',
+        synopsis: "They say whatever doesn't kill you makes you stronger, but that's not the case for the world's weakest hunter Sung Jinwoo. After being brutally slaughtered by monsters in a high-ranking dungeon, Jinwoo came back with the System, a program only he could see, that's leveling him up in every way. Now, he's inspired to discover the secrets behind his powers and the dungeon that spawned them.",
+        episodes: [
+            {
+                number: '1',
+                title: 'You Are not E-Rank, Are You?',
+                downloadLink: 'upload link'
+            },
+            {
+                number: '2',
+                title: 'I Suppose You Are not Aware',
+                downloadLink: 'upload link'
+            },
+            {
+                number: '3',
+                title: 'Still a Long Way to Go',
+                downloadLink: 'upload link'
+            },
+            {
+                number: '4',
+                title: 'I Need To Stop Faking',
+                downloadLink: 'upload link'
+            },
+            {
+                number: '5',
+                title: 'This Is What We are Trained to Do',
+                downloadLink: 'upload link'
+            },
+            {
+                number: '6',
+                title: 'Do not Look Down on My Guys',
+                downloadLink: 'upload link'
+            },
+            {
+                number: '7',
+                title: 'The 10th S-rank Hunter',
+                downloadLink: 'upload link'
+            },
+            {
+                number: '8',
+                title: 'Looking Up was Tiring Me Out',
+                downloadLink: 'upload link'
+            },
+            {
+                number: '9',
+                title: 'It Was All Worth It',
+                downloadLink: 'upload link'
+            },
+            {
+                number: '10',
+                title: 'We Need a Hero',
+                downloadLink: 'upload link'
+            },
+            {
+                number: '11',
+                title: 'Its Going to Get Even More Intense',
+                downloadLink: 'upload link'
+            }
+        ],
+        uploaderName: 'AnimeAdmin',
+        uploadDate: 'March 20, 2024',
+        featured: true,
+        popular: true,
+        topPick: true,
+        nextVideo: 1 // Added next video link back to the first anime
     }
     // No more dummy anime data - only include anime that you've actually uploaded
 ];
 
 // Function to create anime cards
 function createAnimeCard(anime) {
+    const isPinned = isPinnedAnime(anime.id);
     return `
-        <a href="anime.html?id=${anime.id}" class="anime-card">
+        <div class="anime-card" onclick="navigateToAnimeDetails(event, ${anime.id})" style="cursor: pointer;">
             <div class="anime-poster">
                 <img src="${anime.cover}" alt="${anime.title}">
             </div>
             <div class="anime-info">
-                <h3>${anime.title}</h3>
-                <div class="release-date">${anime.year}</div>
-                <p class="anime-excerpt">${anime.synopsis.substring(0, 120)}${anime.synopsis.length > 120 ? '...' : ''}</p>
-                <div class="uploader"><i class="fas fa-user"></i> ${anime.uploaderName || 'Admin'}</div>
+                <div>
+                    <h3>${anime.title}</h3>
+                    <div class="release-date">
+                        <i class="fas fa-calendar"></i> ${anime.year}
+                        <span class="status">${anime.status}</span>
+                    </div>
+                    <p class="anime-excerpt">${anime.synopsis.substring(0, 200)}${anime.synopsis.length > 200 ? '...' : ''}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="meta-info">
+                        <span class="uploader"><i class="fas fa-user"></i> ${anime.uploaderName || 'Admin'}</span>
+                        <span class="genre"><i class="fas fa-tag"></i> ${anime.genre}</span>
+                        <span class="episodes"><i class="fas fa-play"></i> ${anime.episodes.length} Episode${anime.episodes.length !== 1 ? 's' : ''}</span>
+                    </div>
+                    <div class="actions">
+                        <button class="pin-btn ${isPinned ? 'pinned' : ''}" onclick="togglePin(event, ${anime.id})">
+                            <i class="fas fa-thumbtack"></i> ${isPinned ? 'Pinned' : 'Pin'}
+                        </button>
+                    </div>
+                </div>
             </div>
-        </a>
+        </div>
     `;
+}
+
+// Function to check if anime is pinned
+function isPinnedAnime(animeId) {
+    const pinnedAnimes = JSON.parse(localStorage.getItem('pinnedAnimes')) || [];
+    return pinnedAnimes.includes(animeId);
+}
+
+// Function to toggle pin status
+function togglePin(event, animeId) {
+    event.preventDefault(); // Prevent navigation to anime page
+    const pinnedAnimes = JSON.parse(localStorage.getItem('pinnedAnimes')) || [];
+    const index = pinnedAnimes.indexOf(animeId);
+    
+    if (index === -1) {
+        // Pin the anime
+        pinnedAnimes.push(animeId);
+    } else {
+        // Unpin the anime
+        pinnedAnimes.splice(index, 1);
+    }
+    
+    localStorage.setItem('pinnedAnimes', JSON.stringify(pinnedAnimes));
+    
+    // Update the UI
+    populateAnimeSections(); // Refresh all sections to update order
 }
 
 // Function to create episode list
@@ -91,35 +206,37 @@ function createEpisodeList(episodes) {
 
 // Function to populate anime sections
 function populateAnimeSections() {
-    const latestAnimeSection = document.querySelector('.section:nth-child(2)');
-    const popularAnimeSection = document.querySelector('.section:nth-child(3)');
-    const topPicksSection = document.querySelector('.section:nth-child(4)');
-    
     const latestAnime = document.getElementById('latest-anime');
     const popularAnime = document.getElementById('popular-anime');
     const topPicks = document.getElementById('top-picks');
     
-    // Filter for latest anime (in a real app, would sort by date)
-    if (latestAnime && animeData.length > 0) {
-        latestAnime.innerHTML = animeData.map(anime => createAnimeCard(anime)).join('');
-    } else if (latestAnimeSection) {
-        latestAnimeSection.style.display = 'none';
+    // Get pinned anime IDs
+    const pinnedAnimeIds = JSON.parse(localStorage.getItem('pinnedAnimes')) || [];
+    
+    // Sort anime data with pinned items first
+    const sortedAnimeData = [...animeData].sort((a, b) => {
+        const aIsPinned = pinnedAnimeIds.includes(a.id);
+        const bIsPinned = pinnedAnimeIds.includes(b.id);
+        if (aIsPinned && !bIsPinned) return -1;
+        if (!aIsPinned && bIsPinned) return 1;
+        return 0;
+    });
+    
+    // Filter for latest anime
+    if (latestAnime && sortedAnimeData.length > 0) {
+        latestAnime.innerHTML = sortedAnimeData.map(anime => createAnimeCard(anime)).join('');
     }
     
     // Filter popular anime
-    const popular = animeData.filter(anime => anime.popular);
+    const popular = sortedAnimeData.filter(anime => anime.popular);
     if (popularAnime && popular.length > 0) {
         popularAnime.innerHTML = popular.map(anime => createAnimeCard(anime)).join('');
-    } else if (popularAnimeSection) {
-        popularAnimeSection.style.display = 'none';
     }
     
     // Filter top picks
-    const picks = animeData.filter(anime => anime.topPick);
+    const picks = sortedAnimeData.filter(anime => anime.topPick);
     if (topPicks && picks.length > 0) {
         topPicks.innerHTML = picks.map(anime => createAnimeCard(anime)).join('');
-    } else if (topPicksSection) {
-        topPicksSection.style.display = 'none';
     }
     
     // Show a message if no anime data is available at all
@@ -271,6 +388,18 @@ function setupSearch() {
             }
         });
     }
+}
+
+// Add new function for navigation with animation
+function navigateToAnimeDetails(event, animeId) {
+    // Don't navigate if clicking the pin button
+    if (event.target.closest('.pin-btn')) {
+        return;
+    }
+
+    // Navigate immediately with minimal fade
+    document.body.style.opacity = '0.8';
+    window.location.href = `anime.html?id=${animeId}`;
 }
 
 // Initialize the page

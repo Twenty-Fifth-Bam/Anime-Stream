@@ -131,6 +131,22 @@
                         </div>
                     </section>
                     
+                    <!-- Comment Section -->
+                    <section class="section comment-section">
+                        <h2>Comments</h2>
+                        <div class="comment-form">
+                            <textarea id="comment-text" placeholder="Write your comment here..."></textarea>
+                            <div class="form-row">
+                                <input type="text" id="commenter-name" placeholder="Your Name">
+                                <button id="submit-comment">Submit Comment</button>
+                            </div>
+                        </div>
+                        <div class="comments-container" id="comments-list">
+                            <!-- Comments will appear here -->
+                            <p class="no-comments">Be the first to comment!</p>
+                        </div>
+                    </section>
+                    
                     ${relatedHTML}
                 `;
             } else {
@@ -179,6 +195,54 @@
                 
                 // Setup search on the error page
                 setupSearch();
+            }
+            
+            // Handle comments
+            if (document.getElementById('submit-comment')) {
+                const commentText = document.getElementById('comment-text');
+                const commenterName = document.getElementById('commenter-name');
+                const submitButton = document.getElementById('submit-comment');
+                const commentsList = document.getElementById('comments-list');
+                const noComments = document.querySelector('.no-comments');
+                
+                submitButton.addEventListener('click', () => {
+                    if (commentText.value.trim() === '' || commenterName.value.trim() === '') {
+                        alert('Please enter your name and comment');
+                        return;
+                    }
+                    
+                    // Create comment element
+                    const commentElement = document.createElement('div');
+                    commentElement.classList.add('comment');
+                    
+                    const commentDate = new Date().toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                    
+                    commentElement.innerHTML = `
+                        <div class="comment-header">
+                            <strong>${commenterName.value.trim()}</strong>
+                            <span class="comment-date">${commentDate}</span>
+                        </div>
+                        <div class="comment-body">
+                            <p>${commentText.value.trim()}</p>
+                        </div>
+                    `;
+                    
+                    // Remove "no comments" message if it exists
+                    if (noComments) {
+                        noComments.remove();
+                    }
+                    
+                    // Add the comment to the comments list
+                    commentsList.appendChild(commentElement);
+                    
+                    // Clear the form
+                    commentText.value = '';
+                    commenterName.value = '';
+                });
             }
         });
     </script>
