@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Detail - Raretoon4all</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        
+        .anime-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .anime-header::after {
+            content: '';
+            position: absolute;
+            left: 230px; /* 200px image width + 30px gap */
+            top: 20px;
+            height: calc(100% - 40px);
+            width: 1px;
+            background: #000;
+        }
+        
+        .anime-header img {
+            width: 200px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .anime-details {
+            flex-grow: 1;
+            padding-left: 30px;
+        }
+
+        .anime-details h1 {
+            margin: 0 0 20px 0;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .anime-details p {
+            margin: 10px 0;
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .anime-details strong {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .video-container {
+            margin-top: 30px;
+            text-align: center;
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        iframe {
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .download-button {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .download-button a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #000;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .download-button a:hover {
+            background: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .anime-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .anime-header::after {
+                display: none;
+            }
+
+            .anime-details {
+                padding-left: 0;
+            }
+
+            iframe {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="index.html">Raretoon4all</a>
+            <img src="images/logo.png" alt="Raretoon4all Logo">
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="categories.html">Categories</a>
+            <a href="search.html">Search</a>
+            <a href="about.html">About</a>
+        </div>
+        <div class="nav-search">
+            <input type="text" id="global-search" placeholder="Search anime...">
+            <button id="global-search-btn"><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="anime-header">
+            <img src="https://via.placeholder.com/200x300" alt="Anime Thumbnail" id="anime-thumbnail">
+            <div class="anime-details">
+                <h1 id="anime-title">Anime Title</h1>
+                <p><strong>Genres:</strong> <span id="anime-genres">Action, Adventure</span></p>
+                <p><strong>Language:</strong> <span id="anime-languages">Hindi, English</span></p>
+                <p><strong>Resolution:</strong> <span id="anime-resolution">480p, 720p, 1080p</span></p>
+                <p><strong>Release Date:</strong> <span id="anime-release-date">2024</span></p>
+                <p><strong>Status:</strong> <span id="anime-status">Completed</span></p>
+                <p><strong>Synopsis:</strong> <span id="anime-synopsis">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span></p>
+            </div>
+        </div>
+        
+        <div class="video-container">
+            <iframe src="about:blank" id="anime-preview" allowfullscreen></iframe>
+        </div>
+        
+        <div class="download-button">
+            <a href="#" id="download-link">Download Now</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Raretoon4all</h3>
+                <p>Your favorite destination for anime content.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                    <li><a href="search.html">Search</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Raretoon4all. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html> 

@@ -13,13 +13,36 @@ const animeData = [
                 number: '1 - 22',
                 title: 'Attack on Titan Season 3 Hindi ZIP Batch File',
                 downloadLink: 'https://cuty.io/umD01TAWa'
-            },
+            }
         ],
         uploaderName: 'AnimeAdmin',
         uploadDate: 'March 15, 2024',
         featured: true,
         popular: true,
-        topPick: true
+        topPick: true,
+        nextVideo: 2 // Added next video link to the second anime
+    },
+    {
+        id: 2,
+        title: 'Dragon Ball Super Universal survival saga',
+        cover: 'images/dbs-top.jpg',
+        genre: 'Action, Adventure, Fantasy',
+        year: '2022',
+        status: 'Completed',
+        synopsis: 'Goku and his friends are back and finally have time to live normal lives. But when a new, powerful being shows up, their peaceful home is threatened again. Can they defeat Beerus, the God of Destruction? And what of this Super Saiyan God he seeks?',
+        episodes: [
+            {
+                number: '76 - 131',
+                title: 'Dragon Ball Super Hindi ZIP Batch File',
+                downloadLink: 'https://cuty.io/h2pCxS6aKg'
+            }
+        ],
+        uploaderName: 'AnimeAdmin',
+        uploadDate: 'March 20, 2024',
+        featured: true,
+        popular: true,
+        topPick: true,
+        nextVideo: 1 // Added next video link back to the first anime
     }
     // No more dummy anime data - only include anime that you've actually uploaded
 ];
@@ -112,6 +135,14 @@ function populateAnimeSections() {
     }
 }
 
+// Function to handle next video navigation
+function navigateToNextVideo(currentAnimeId) {
+    const currentAnime = animeData.find(a => a.id === currentAnimeId);
+    if (currentAnime && currentAnime.nextVideo) {
+        window.location.href = `anime.html?id=${currentAnime.nextVideo}`;
+    }
+}
+
 // Function to open anime detail modal
 function openAnimeDetail(animeId) {
     const anime = animeData.find(a => a.id === animeId);
@@ -125,6 +156,7 @@ function openAnimeDetail(animeId) {
     const status = document.getElementById('animeStatus');
     const synopsis = document.getElementById('animeSynopsis');
     const episodeList = document.getElementById('episodeList');
+    const nextVideoBtn = document.getElementById('nextVideoBtn');
     
     // Set content
     cover.src = anime.cover;
@@ -138,9 +170,79 @@ function openAnimeDetail(animeId) {
     // Create episode list
     episodeList.innerHTML = createEpisodeList(anime.episodes);
     
+    // Handle next video button
+    if (nextVideoBtn) {
+        if (anime.nextVideo) {
+            nextVideoBtn.style.display = 'block';
+            nextVideoBtn.onclick = () => navigateToNextVideo(anime.id);
+        } else {
+            nextVideoBtn.style.display = 'none';
+        }
+    }
+    
     // Show modal
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden'; // Prevent scrolling
+}
+
+// Function to populate anime details on the anime page
+function populateAnimeDetails() {
+    // Get the anime ID from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const animeId = parseInt(urlParams.get('id'));
+    
+    if (!animeId) return;
+    
+    const anime = animeData.find(a => a.id === animeId);
+    if (!anime) {
+        document.querySelector('main').innerHTML = `
+            <div class="section">
+                <div class="error-container">
+                    <h2>Anime Not Found</h2>
+                    <p>The anime you're looking for could not be found.</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    // Populate anime details
+    const animeDetailsSection = document.querySelector('.anime-details-section');
+    if (animeDetailsSection) {
+        const animeHeaderHTML = `
+            <div class="anime-details-header">
+                <div class="anime-cover">
+                    <img src="${anime.cover}" alt="${anime.title}">
+                </div>
+                <div class="anime-details">
+                    <h1>${anime.title}</h1>
+                    <div class="anime-meta">
+                        <span>${anime.genre}</span>
+                        <span>${anime.year}</span>
+                        <span>${anime.status}</span>
+                    </div>
+                    <p>${anime.synopsis}</p>
+                    ${anime.nextVideo ? 
+                        `<button id="nextVideoBtn" class="btn" onclick="navigateToNextVideo(${anime.id})">Next Anime <i class="fas fa-arrow-right"></i></button>` : ''}
+                </div>
+            </div>
+        `;
+        
+        animeDetailsSection.innerHTML = animeHeaderHTML;
+    }
+    
+    // Populate episodes
+    const episodesSection = document.querySelector('.episodes-section');
+    if (episodesSection) {
+        episodesSection.innerHTML = `
+            <h2>Episodes</h2>
+            <div class="episode-list-container">
+                <div class="episode-list">
+                    ${createEpisodeList(anime.episodes)}
+                </div>
+            </div>
+        `;
+    }
 }
 
 // Search functionality
@@ -174,6 +276,6 @@ function setupSearch() {
 // Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
     populateAnimeSections();
+    populateAnimeDetails(); // Add this to handle the anime details page
     setupSearch();
-    // Don't call setupModal since we're not using modals anymore
 }); 
