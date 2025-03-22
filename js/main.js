@@ -20,7 +20,8 @@ const animeData = [
         featured: true,
         popular: true,
         topPick: true,
-        nextVideo: 2 // Added next video link to the second anime
+        nextVideo: 2, // Added next video link to the second anime
+        pinned: false
     },
     {
         id: 2,
@@ -42,7 +43,8 @@ const animeData = [
         featured: true,
         popular: true,
         topPick: true,
-        nextVideo: 1 // Added next video link back to the first anime
+        nextVideo: 1, // Added next video link back to the first anime
+        pinned: false
     },
     {
         id: 3,
@@ -51,48 +53,50 @@ const animeData = [
         genre: 'Action, Adventure, Fantasy',
         year: '2025',
         status: 'Total 13 Episodes',
+        hasRemainingEpisodes: true,
         synopsis: "They say whatever doesn't kill you makes you stronger, but that's not the case for the world's weakest hunter Sung Jinwoo. After being brutally slaughtered by monsters in a high-ranking dungeon, Jinwoo came back with the System, a program only he could see, that's leveling him up in every way. Now, he's inspired to discover the secrets behind his powers and the dungeon that spawned them.",
         episodes: [
             {
                 number: '1',
                 title: 'You Are not E-Rank, Are You?',
-                downloadLink: 'upload link'
+                downloadLink: 'https://cuty.io/1CbnW'
             },
             {
                 number: '2',
                 title: 'I Suppose You Are not Aware',
-                downloadLink: 'upload link'
+                downloadLink: 'https://cuty.io/87tyB'
             },
             {
                 number: '3',
                 title: 'Still a Long Way to Go',
-                downloadLink: 'upload link'
+                downloadLink: 'https://cuty.io/2M2RtWVlLW56'
             },
             {
                 number: '4',
                 title: 'I Need To Stop Faking',
-                downloadLink: 'upload link'
+                downloadLink: 'https://cuty.io/CgnlBYgwK1S'
             },
             {
                 number: '5',
                 title: 'This Is What We are Trained to Do',
-                downloadLink: 'upload link'
+                downloadLink: 'https://cuty.io/kutkD'
             },
             {
                 number: '6',
                 title: 'Do not Look Down on My Guys',
-                downloadLink: 'upload link'
+                downloadLink: 'https://cuty.io/F1cEYlUVA'
             },
             {
                 number: '7',
                 title: 'The 10th S-rank Hunter',
-                downloadLink: 'upload link'
+                downloadLink: 'https://cuty.io/HECtM51Wp'
             },
             {
                 number: '8',
                 title: 'Looking Up was Tiring Me Out',
-                downloadLink: 'upload link'
+                downloadLink: 'https://cuty.io/eSakXVXn8IG'
             },
+            /*
             {
                 number: '9',
                 title: 'It Was All Worth It',
@@ -108,20 +112,31 @@ const animeData = [
                 title: 'Its Going to Get Even More Intense',
                 downloadLink: 'upload link'
             }
+            */
         ],
         uploaderName: 'AnimeAdmin',
         uploadDate: 'March 20, 2024',
         featured: true,
         popular: true,
         topPick: true,
-        nextVideo: 1 // Added next video link back to the first anime
+        nextVideo: 1, // Added next video link back to the first anime
+        pinned: true
     }
     // No more dummy anime data - only include anime that you've actually uploaded
 ];
 
+// Function to get a unique device identifier
+function getDeviceId() {
+    let deviceId = localStorage.getItem('device_id');
+    if (!deviceId) {
+        deviceId = 'device_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('device_id', deviceId);
+    }
+    return deviceId;
+}
+
 // Function to create anime cards
 function createAnimeCard(anime) {
-    const isPinned = isPinnedAnime(anime.id);
     return `
         <div class="anime-card" onclick="navigateToAnimeDetails(event, ${anime.id})" style="cursor: pointer;">
             <div class="anime-poster">
@@ -129,7 +144,7 @@ function createAnimeCard(anime) {
             </div>
             <div class="anime-info">
                 <div>
-                    <h3>${anime.title}</h3>
+                    <h3>${anime.pinned ? '<i class="fas fa-thumbtack" style="color: #000000;"></i> ' : ''}${anime.title}</h3>
                     <div class="release-date">
                         <i class="fas fa-calendar"></i> ${anime.year}
                         <span class="status">${anime.status}</span>
@@ -142,41 +157,10 @@ function createAnimeCard(anime) {
                         <span class="genre"><i class="fas fa-tag"></i> ${anime.genre}</span>
                         <span class="episodes"><i class="fas fa-play"></i> ${anime.episodes.length} Episode${anime.episodes.length !== 1 ? 's' : ''}</span>
                     </div>
-                    <div class="actions">
-                        <button class="pin-btn ${isPinned ? 'pinned' : ''}" onclick="togglePin(event, ${anime.id})">
-                            <i class="fas fa-thumbtack"></i> ${isPinned ? 'Pinned' : 'Pin'}
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
     `;
-}
-
-// Function to check if anime is pinned
-function isPinnedAnime(animeId) {
-    const pinnedAnimes = JSON.parse(localStorage.getItem('pinnedAnimes')) || [];
-    return pinnedAnimes.includes(animeId);
-}
-
-// Function to toggle pin status
-function togglePin(event, animeId) {
-    event.preventDefault(); // Prevent navigation to anime page
-    const pinnedAnimes = JSON.parse(localStorage.getItem('pinnedAnimes')) || [];
-    const index = pinnedAnimes.indexOf(animeId);
-    
-    if (index === -1) {
-        // Pin the anime
-        pinnedAnimes.push(animeId);
-    } else {
-        // Unpin the anime
-        pinnedAnimes.splice(index, 1);
-    }
-    
-    localStorage.setItem('pinnedAnimes', JSON.stringify(pinnedAnimes));
-    
-    // Update the UI
-    populateAnimeSections(); // Refresh all sections to update order
 }
 
 // Function to create episode list
@@ -199,6 +183,9 @@ function createEpisodeList(episodes) {
     
     if (episodes.length === 0) {
         episodeHTML = `<p class="no-episodes">No episodes available yet. Check back soon!</p>`;
+    } else {
+        // Add the note after the last episode
+        episodeHTML += `<p class="note">Note: The rest of the episodes will be added soon.</p>`;
     }
     
     return episodeHTML;
@@ -210,15 +197,11 @@ function populateAnimeSections() {
     const popularAnime = document.getElementById('popular-anime');
     const topPicks = document.getElementById('top-picks');
     
-    // Get pinned anime IDs
-    const pinnedAnimeIds = JSON.parse(localStorage.getItem('pinnedAnimes')) || [];
-    
-    // Sort anime data with pinned items first
+    // Sort anime with pinned items first
     const sortedAnimeData = [...animeData].sort((a, b) => {
-        const aIsPinned = pinnedAnimeIds.includes(a.id);
-        const bIsPinned = pinnedAnimeIds.includes(b.id);
-        if (aIsPinned && !bIsPinned) return -1;
-        if (!aIsPinned && bIsPinned) return 1;
+        // Assuming 'pinned' is a boolean property from your backend
+        if (a.pinned && !b.pinned) return -1;
+        if (!a.pinned && b.pinned) return 1;
         return 0;
     });
     
@@ -227,13 +210,13 @@ function populateAnimeSections() {
         latestAnime.innerHTML = sortedAnimeData.map(anime => createAnimeCard(anime)).join('');
     }
     
-    // Filter popular anime
+    // Filter popular anime and maintain pin order
     const popular = sortedAnimeData.filter(anime => anime.popular);
     if (popularAnime && popular.length > 0) {
         popularAnime.innerHTML = popular.map(anime => createAnimeCard(anime)).join('');
     }
     
-    // Filter top picks
+    // Filter top picks and maintain pin order
     const picks = sortedAnimeData.filter(anime => anime.topPick);
     if (topPicks && picks.length > 0) {
         topPicks.innerHTML = picks.map(anime => createAnimeCard(anime)).join('');
@@ -323,10 +306,9 @@ function populateAnimeDetails() {
         return;
     }
     
-    // Populate anime details
-    const animeDetailsSection = document.querySelector('.anime-details-section');
-    if (animeDetailsSection) {
-        const animeHeaderHTML = `
+    // Create the complete page content
+    const pageContent = `
+        <div class="anime-details-section">
             <div class="anime-details-header">
                 <div class="anime-cover">
                     <img src="${anime.cover}" alt="${anime.title}">
@@ -343,22 +325,41 @@ function populateAnimeDetails() {
                         `<button id="nextVideoBtn" class="btn" onclick="navigateToNextVideo(${anime.id})">Next Anime <i class="fas fa-arrow-right"></i></button>` : ''}
                 </div>
             </div>
-        `;
+        </div>
         
-        animeDetailsSection.innerHTML = animeHeaderHTML;
-    }
-    
-    // Populate episodes
-    const episodesSection = document.querySelector('.episodes-section');
-    if (episodesSection) {
-        episodesSection.innerHTML = `
+        <div class="episodes-section">
             <h2>Episodes</h2>
             <div class="episode-list-container">
                 <div class="episode-list">
                     ${createEpisodeList(anime.episodes)}
                 </div>
             </div>
-        `;
+        </div>
+
+        ${anime.id === 3 ? `
+        <div class="episodes-note">
+            <p><i class="fas fa-info-circle"></i> Note: The rest of the episodes will be added soon.</p>
+        </div>` : ''}
+
+        <div class="comment-section">
+            <h2>Comments</h2>
+            <div class="comment-form">
+                <textarea id="comment-text" placeholder="Write your comment here..."></textarea>
+                <div class="form-row">
+                    <input type="text" id="commenter-name" placeholder="Your Name">
+                    <button id="submit-comment">Submit Comment</button>
+                </div>
+            </div>
+            <div class="comments-container" id="comments-list">
+                <p class="no-comments">Be the first to comment!</p>
+            </div>
+        </div>
+    `;
+
+    // Update the main content
+    const mainContent = document.querySelector('main');
+    if (mainContent) {
+        mainContent.innerHTML = pageContent;
     }
 }
 
@@ -392,19 +393,16 @@ function setupSearch() {
 
 // Add new function for navigation with animation
 function navigateToAnimeDetails(event, animeId) {
-    // Don't navigate if clicking the pin button
-    if (event.target.closest('.pin-btn')) {
-        return;
-    }
-
-    // Navigate immediately with minimal fade
-    document.body.style.opacity = '0.8';
     window.location.href = `anime.html?id=${animeId}`;
 }
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
+    // Reset any leftover opacity from previous navigation
+    document.body.style.opacity = '1';
+    document.body.style.transition = 'none';
+    
     populateAnimeSections();
-    populateAnimeDetails(); // Add this to handle the anime details page
+    populateAnimeDetails();
     setupSearch();
 }); 
