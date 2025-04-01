@@ -29,8 +29,6 @@ You can view a live demo of this project by simply opening the `index.html` file
 └── js/
     └── main.js             # JavaScript functionality
 ```
-## Website Link: https://twenty-fifth-bam.github.io/Anime-Stream/
-
 ## How to Use
 
 1. Download or clone this repository
