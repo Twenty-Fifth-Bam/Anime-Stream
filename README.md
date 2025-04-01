@@ -97,7 +97,7 @@ The website uses a clean, modern design with a color scheme based on dark backgr
 
 ## License
 
-This project is free to use for personal and commercial purposes.
+This project is not free to use for any personal and commercial purposes.
 
 ---
 
